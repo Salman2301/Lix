@@ -1,1 +1,25 @@
-
+{
+  "name": "lix",
+  "version": "0.1.0",
+  "description": "Lix is a local wix editor manage wix sites",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Salman2301/Lix.git"
+  },
+  "keywords": [
+    "wix",
+    "local",
+    "editor",
+    "corvid"
+  ],
+  "author": "salman2301, scott (infuze-designs)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Salman2301/Lix/issues"
+  },
+  "homepage": "https://github.com/Salman2301/Lix#readme"
+}
