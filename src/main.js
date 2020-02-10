@@ -1,44 +1,85 @@
-const { app, BrowserWindow } = require('electron');
-server = require("../server.js");
+console.log("hello world!");
 
-function createWindow () {
-  // Create the browser window.
-  const win = new BrowserWindow({
-    width: 1000,
-    height: 900,
-    webPreferences: {
-      nodeIntegration: true
-    }
-  })
+const serverUrl = "http://127.0.0.1:8905";
 
-  // and load the index.html of the app.
-  win.loadFile('./src/index.html')
+$( document ).ready(init);
 
-  // Open the DevTools.
-//   win.webContents.openDevTools()
+function init() {
+    refreshSiteList() 
+
+    // events
+
+    $("#btn-create-site").click(function() {
+        console.log("clicked!!");
+        let folderName = $('#inFolderName').val();
+        let siteUrl = $('#inSiteUrl').val();
+
+        let url = `${serverUrl}/corvid/createApp?folderName=${folderName}&siteUrl=${siteUrl}`;
+
+        fetch(url ,{mode:"no-cors"})
+        .then(res=>{
+            console.log(res);
+            if(res.ok) {
+                return res.json();
+            } else {
+                handleError(`Status is not okay`)
+            }
+        })
+        .then(data=>{
+            refreshSiteList();
+        });
+
+    });
 }
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
-app.whenReady().then(createWindow)
 
-// Quit when all windows are closed.
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
+function refreshSiteList() {
+    // get JSON from server
+    // generate card html
 
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow()
-  }
-})
+    let url = `${serverUrl}/corvid/list`;
+    console.log("url : " , url);
+    fetch(url,{mode:"no-cors"})
+    .then(res=>{
+        console.log(res);
+        if(res.ok) {
+            return res.json();
+        } else {
+            handleError(`Status is not okay`)
+        }
+    })
+    .then(data=>{
+        console.log(data);
+        let sitesHTML = [];
+        const sitesEl = $("#sites");
+        sitesEl.innerHTML = ""; // empty all the sites
+        data.forEach(site=>{
+            sitesHTML.innerHTML +="\n"+ cardHTMLTemplate(site);
+        });
+        console.log(sitesHTML);
+        $(sitesEl).append(sitesHTML.join(''));
+    });
+    
+}
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+
+function handleError(msg) {
+    console.log("handle Error here : ", msg);
+}
+
+var cardHTMLTemplate = (data) => `<div class="col-sm-3 mx-auto mx-2" id="card-site-id-${data.slug}">
+<div class="card">
+    <img src="./assets/image/default.png" class="card-img-top" alt="site image">
+    <div class="card-body">
+        <h5 class="card-title">${data.siteName || "No site Name"}</h5>
+        <p class="card-text"><small class="text-muted">${data.timeAgo || "-"}</small></p>
+        <button href="#" class="btn btn-primary"><img class="svg-white" src="./assets/icons/edit.svg"> OPEN
+            EDITOR</button>
+        <button href="#" class="btn btn-primary"><img class="svg-white"
+                src="./assets/icons/download-cloud.svg">PULL</button>
+
+        <button href="#" class="btn btn-danger"><img class="svg-white"
+                src="./assets/icons/trash-2.svg">DELETE</button>
+    </div>
+</div>
+</div>`;
