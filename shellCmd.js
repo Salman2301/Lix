@@ -9,7 +9,7 @@ exports.pull = "npx corvid pull";
 exports.push = "npx corvid push";
 
 exports.corvidNewApp = (folderName, url) =>{
-    return `npx create-corvid-app ${folderName} ${url}`;
+    return `npx create-corvid-app corvid/${folderName} ${url}`;
 }
 
 

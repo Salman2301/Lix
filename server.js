@@ -1,6 +1,7 @@
 const shell = require('shelljs');
 const express = require('express');
 const {echo, corvidNewApp, openEditor ,login, logout} = require("./shellCmd.js");
+const {checkCreateDir} = require("./helper");
 
 const app = express();
 
@@ -24,6 +25,8 @@ app.get('/corvid/createApp', function (req, res) {
             throw new Error("missing required query 'siteUrl'.");
         }
         
+        checkCreateDir("./corvid");
+        
         shell.exec(corvidNewApp(folderName , siteUrl));
         res.send('Hello World');
     } catch (error) {
@@ -35,7 +38,6 @@ app.get('/corvid/createApp', function (req, res) {
     }
 });
 
-
 app.get('/corvid/pull', function (req, res) {
     try {
         shell.exec(pull);
@@ -44,7 +46,6 @@ app.get('/corvid/pull', function (req, res) {
         console.log("error : " , e);
     }
 });
-
 
 app.get('/corvid/push', function (req, res) {
     try {
@@ -76,5 +77,6 @@ app.get('/corvid/logout', function (req, res) {
 
     }
 });
+
 
 app.listen(8905)
