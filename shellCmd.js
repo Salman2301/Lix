@@ -1,15 +1,30 @@
 // refer corvid-cli
+const shell = require('shelljs');
+const {checkCreateDir} = require("./helper");
 
-exports.echo = "echo hello from terminal";
+exports.echo = ()=>shell.exec("echo shelljs is working.");
 
-exports.login = "npx corvid login";
-exports.logout = "npx corvid logout";
-exports.openEditor = "npx corvid open-editor";
-exports.pull = "npx corvid pull";
-exports.push = "npx corvid push";
+exports.corvid = {};
+exports.corvid.login =()=>shell.exec("npx corvid login");
+exports.corvid.logout =()=>shell.exec("npx corvid logout");
 
-exports.corvidNewApp = (folderName, url) =>{
-    return `npx create-corvid-app corvid/${folderName} ${url}`;
+exports.corvid.openEditor =(folderName)=>{
+    shell.cd(`./corvid/${folderName}`);
+    shell.exec("npx corvid open-editor");
+};
+exports.corvid.pull =(folderName)=>{
+    shell.cd(`./corvid/${folderName}`);
+    shell.exec("npx corvid pull")
+};
+exports.corvid.push =(folderName)=>{
+    shell.cd(`./corvid/${folderName}`);
+    shell.exec("npx corvid push")
+};
+
+exports.corvid.newApp = (folderName, url) =>{
+    checkCreateDir("./corvid");
+    let cmdCreateApp = `npx create-corvid-app ${folderName} ${url}`;
+    shell.exec(cmdCreateApp);
 }
 
 

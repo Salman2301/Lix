@@ -1,9 +1,10 @@
-const shell = require('shelljs');
+
 const express = require('express');
-const {echo, corvidNewApp, openEditor ,login, logout} = require("./shellCmd.js");
-const {checkCreateDir} = require("./helper");
+const {echo, corvid} = require("./shellCmd.js");
 
 const app = express();
+
+echo();
 
 app.get('/corvid/createApp', function (req, res) {
     try {
@@ -13,9 +14,8 @@ app.get('/corvid/createApp', function (req, res) {
         if(!folderName && !siteUrl) {
             res.status(400);
             throw new Error("missing required query 'folderName' and 'siteUrl'.");
-            // return;
         }
-        console.log("am i running?" , req.query);
+
         if(!folderName) {
             res.status(400);
             throw new Error("missing required query 'folderName'.");
@@ -24,11 +24,9 @@ app.get('/corvid/createApp', function (req, res) {
             res.status(400)
             throw new Error("missing required query 'siteUrl'.");
         }
+        corvid.newApp(folderName, siteUrl);
         
-        checkCreateDir("./corvid");
-        
-        shell.exec(corvidNewApp(folderName , siteUrl));
-        res.send('Hello World');
+        res.send('App created!');
     } catch (error) {
         console.log("error : " , error);
         res.send({
@@ -40,19 +38,39 @@ app.get('/corvid/createApp', function (req, res) {
 
 app.get('/corvid/pull', function (req, res) {
     try {
-        shell.exec(pull);
+        const folderName = req.query.folderName;
+
+        if(!folderName) {
+            res.status(400);
+            throw new Error("missing required query 'folderName'.");
+        }
+        corvid.pull(folderName);
         res.send('pull')
     } catch (error) {
         console.log("error : " , e);
+        res.send({
+            errorCode : res.statusCode,
+            message : error.message
+        })
     }
 });
 
 app.get('/corvid/push', function (req, res) {
     try {
-       shell.exec(push);
-       res.send('push');   
+        const folderName = req.query.folderName;
+        
+        if(!folderName) {
+            res.status(400);
+            throw new Error("missing required query 'folderName'.");
+        }
+        corvid.push(folderName);
+        res.send('push');   
     } catch (error) {
         console.log("error : " , e);
+        res.send({
+            errorCode : res.statusCode,
+            message : error.message
+        })
     }
 });
 
@@ -60,21 +78,28 @@ app.get('/corvid/push', function (req, res) {
 
 app.get('/corvid/login', function (req, res) {
     try {
-        shell.exec(login);
+        corvid.login();
         res.send('log in');
     } catch (error) {
         console.log("error : " , e);
+        res.send({
+            errorCode : res.statusCode,
+            message : error.message
+        });
     }
 });
 
 app.get('/corvid/logout', function (req, res) {
     try {
-        shell.exec(logout);
+        corvid.logout();
         res.send('log out')
     }
     catch(e) {
         console.log("error : " , e);
-
+        res.send({
+            errorCode : res.statusCode,
+            message : error.message
+        });
     }
 });
 
