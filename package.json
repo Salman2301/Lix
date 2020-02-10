@@ -2,7 +2,7 @@
   "name": "lix",
   "version": "0.1.0",
   "description": "Lix is a local wix editor manage wix sites",
-  "main": "main.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "electron ."
   },
@@ -21,5 +21,12 @@
   "bugs": {
     "url": "https://github.com/Salman2301/Lix/issues"
   },
-  "homepage": "https://github.com/Salman2301/Lix#readme"
+  "homepage": "https://github.com/Salman2301/Lix#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "shelljs": "^0.8.3"
+  }
 }

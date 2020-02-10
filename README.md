@@ -2,7 +2,12 @@
 Lix is a Local Wix Editor Interface for Mac and Windows application. Built using Electron
 
 # Start
-run `npm start` to start the application
+1. git clone this repo
+2. cd to this repo and run `npm install`
+3. run `npm i -g electron`
+4. run `npm start` to start the application
+
+an electron app will be opened
 
 
 # Release
