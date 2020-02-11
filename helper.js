@@ -15,7 +15,7 @@ function getList(dir) {
             siteName : folder.toUpperCase().replace(/-/g , " "),
             slug : folder,
             lastUpdated: new Date(), // TODO: NEED TO TRACK THE LAST PULL
-            timeAgo : lastUpdated
+            timeAgo : new Date()
         }
     })
     return json;

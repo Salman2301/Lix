@@ -33,33 +33,40 @@ function init() {
 }
 
 
-function refreshSiteList() {
-    // get JSON from server
-    // generate card html
-
-    let url = `${serverUrl}/corvid/list`;
-    console.log("url : " , url);
-    fetch(url,{mode:"no-cors"})
-    .then(res=>{
-        console.log(res);
-        if(res.ok) {
-            return res.json();
-        } else {
-            handleError(`Status is not okay`)
-        }
-    })
-    .then(data=>{
-        console.log(data);
-        let sitesHTML = [];
-        const sitesEl = $("#sites");
-        sitesEl.innerHTML = ""; // empty all the sites
-        data.forEach(site=>{
-            sitesHTML.innerHTML +="\n"+ cardHTMLTemplate(site);
-        });
-        console.log(sitesHTML);
-        $(sitesEl).append(sitesHTML.join(''));
-    });
+async function refreshSiteList() {
+    try {
+        // get JSON from server
+        // generate card html
     
+        let url = `${serverUrl}/corvid/list`;
+        console.log("url : " , url);
+        fetch(url,{mode:"no-cors"})
+        .then(res=>{
+            console.log(res);
+            if(res.ok) {
+                return res.json();
+            } else {
+                handleError(`Status is not okay`)
+            }
+        })
+        .then(data=>{
+            console.log(data);
+            
+            let sitesHTML = "";
+            let sitesEl = $("#sites")[0];
+            sitesEl.innerHTML = ""; // empty all the sites
+            data.forEach(site=>{
+                sitesHTML = sitesHTML + ("\n"+ cardHTMLTemplate(site));
+                // console.log(sitesHTML, ("\n"+ cardHTMLTemplate(site)));
+            });
+            console.log("working :" , sitesHTML);
+            sitesEl.innerHTML = sitesHTML;
+        });
+        
+        
+    } catch (error) {
+        console.log("ERROR : " ,error.message);
+    }
 }
 
 
