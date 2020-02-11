@@ -1,5 +1,6 @@
 # Lix (**Work in Progress**)
-Lix is a Local Wix Editor Interface for Mac, Linux and Windows application, powered by [Electron](https://github.com/electron/electron) and [Corvid](https://github.com/wix-incubator/corvid). Lix helps to manage multiple wix sites and it's open source and MIT license. Feel free to contribute, share code or knowledge.
+Lix is a Local Wix Editor Application for Mac, Linux and Windows OS, powered by [Electron](https://github.com/electron/electron) and [Corvid](https://github.com/wix-incubator/corvid).<br>
+Lix helps to manage multiple wix sites (add, delete, pull or push) and it's open source and MIT license. so, Feel free to contribute, share code or knowledge.
 
 # Tech Stacks
 ### Fronted
