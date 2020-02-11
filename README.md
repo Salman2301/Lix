@@ -5,7 +5,7 @@ Lix helps to manage multiple wix sites (add, delete, pull or push) and it's open
 # Tech Stacks
 ### Fronted
 1. jquery
-2. HTML, CSS
+2. HTML, CSS ([BOOTSTRAP](https://getbootstrap.com/))
 
 ### Backend
 1. nodejs
