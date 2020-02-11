@@ -13,7 +13,10 @@ Lix helps to manage multiple wix sites (add, delete, pull or push) and it's open
 3. express
 
 ### Application
-1. Electron
+1. [Electron](https://github.com/electron/electron)
+
+### CLI
+1. [corvid](https://github.com/wix-incubator/corvid)
 
 # Open the terminal and run the following commands
 1. to download this repo run `git clone https://github.com/Salman2301/Lix.git`.
