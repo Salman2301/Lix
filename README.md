@@ -35,18 +35,21 @@ http://localhost:8905
 ```
 **Path available**
 ```
+/corvid/createApp?folderName=siteName&siteUrl=https://username.wixsite.com/site
+
 /corvid/pull?folderName=siteName
 /corvid/push?folderName=siteName
 /corvid/delete?folderName=siteName
-/corvid/createApp?folderName=siteName&siteUrl=https://username.wixsite.com/site
+/corvid/openEditor?folderName=siteName
+
 /corvid/list
 ```
 # TODO
-- [ ] Hot reload electron application
-- [ ] `/corvid` route should provide details about the Path avaiable and Error message
-- [ ] `/corvid/list` a shell scripts need to be written to track and generate JSON in `.lix.json` file
-
-
+- [x] Hot reload electron application.
+- [ ] `/corvid` route should provide details about the Path avaiable and Error message.
+- [ ] `/corvid/list` a shell scripts need to be written to track and generate JSON in `.lix.json` file.
+- [ ] `/` show list of paths available.
+- [ ] `Login` Added a Login folder inside Corvid. so, the user can login and Logout.
 
 # Release
 Please Visit the release page to download the application for linux, mac, windows once it's ready!.
