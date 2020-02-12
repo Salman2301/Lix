@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require('electron');
+require('electron-reload')(__dirname);
+
 const server = require("../server.js");
 
 function createWindow () {
@@ -17,6 +19,12 @@ function createWindow () {
   // Open the DevTools.
 //   win.webContents.openDevTools()
 }
+
+// for hot reload
+// require('electron-reload')(__dirname, {
+//   // Note that the path to electron may vary according to the main file
+//   electron: require(`${__dirname}/node_modules/electron`)
+// });
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
