@@ -16,7 +16,7 @@ let allowCrossDomain = function(req, res, next) {
 
 echo();
 
-app.get('/corvid/createApp', function (req, res) {
+app.get('/corvid/createApp', async function (req, res) {
     try {
         const folderName = req.query.folderName;
         const siteUrl = req.query.siteUrl;
@@ -34,9 +34,13 @@ app.get('/corvid/createApp', function (req, res) {
             res.status(400)
             throw new Error("missing required query 'siteUrl'.");
         }
-        corvid.newApp(folderName, siteUrl);
+
+        await corvid.newApp(folderName, siteUrl);
         
-        res.send('App created!');
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "App created!"
+        }));
     } catch (error) {
         console.log("error : " , error);
         res.send({
@@ -56,7 +60,10 @@ app.get('/corvid/openEditor', function (req, res) {
             throw new Error("missing required query 'folderName'.");
         }
         corvid.openEditor(folderName);
-        res.send('editor opened!');
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "Editor opened!"
+        }));
     } catch (error) {
         console.log("error : " , error);
         res.send({
@@ -75,7 +82,10 @@ app.get('/corvid/pull', function (req, res) {
             throw new Error("missing required query 'folderName'.");
         }
         corvid.pull(folderName);
-        res.send('pull')
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "pull"
+        }));
     } catch (error) {
         console.log("error : " , error);
         res.send({
@@ -94,7 +104,10 @@ app.get('/corvid/push', function (req, res) {
             throw new Error("missing required query 'folderName'.");
         }
         corvid.push(folderName);
-        res.send('push');   
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "push"
+        }));
     } catch (error) {
         console.log("error : " , error);
         res.send({
@@ -110,7 +123,10 @@ app.get('/corvid/login', function (req, res) {
     try {
 
         corvid.login();
-        res.send('log in');
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "log in"
+        }));
     } catch (error) {
         console.log("error : " , error);
         res.send({
@@ -123,7 +139,10 @@ app.get('/corvid/login', function (req, res) {
 app.get('/corvid/logout', function (req, res) {
     try {
         corvid.logout();
-        res.send('log out')
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "log out"
+        }));
     }
     catch(error) {
         console.log("error : " , error);
@@ -144,7 +163,10 @@ app.get('/corvid/delete', function (req, res) {
             throw new Error("missing required query 'folderName'.");
         }
         corvid.delete(folderName);
-        res.send('deleted!')
+        res.send(JSON.stringify({
+            status : "OK",
+            msg : "deleted"
+        }));
     }
     catch(error) {
         console.log("error : " , error);

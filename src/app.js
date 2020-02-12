@@ -1,5 +1,7 @@
 const { app, BrowserWindow } = require('electron');
-require('electron-reload')(__dirname);
+require('electron-reload')(__dirname, {
+  ignored: /corvid/
+});
 
 const server = require("../server.js");
 

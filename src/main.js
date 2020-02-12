@@ -16,6 +16,8 @@ function init() {
 
         let url = `${serverUrl}/corvid/createApp?folderName=${folderName}&siteUrl=${siteUrl}`;
 
+        $('#createSiteModal').modal('hide');
+        console.log("site is downloading...");
         fetch(url ,{mode:"no-cors"})
         .then(res=>{
             console.log(res);
@@ -30,6 +32,31 @@ function init() {
         });
 
     });
+
+    $('#sites').on('click', '.btn-open-editor',function(e){
+        console.log("clicked :" , this);
+        let folderName = this.getAttribute("folder-name");
+        if(!folderName) {
+            console.log("something went wrong.\n delete and add the site once again.");
+            return;
+        }
+        let url = `${serverUrl}/corvid/openEditor?folderName=${folderName}`;
+
+        fetch(url ,{mode:"no-cors"})
+        .then(res=>{
+            console.log(res);
+            if(res.ok) {
+                return res.json();
+            } else {
+                handleError(`Status is not okay`)
+            }
+        })
+        .then(data=>{
+            // refreshSiteList();
+            console.log("opening editor.");
+        });
+
+    })
 }
 
 
@@ -80,12 +107,12 @@ var cardHTMLTemplate = (data) => `<div class="col-sm-3 mx-auto mx-2" id="card-si
     <div class="card-body">
         <h5 class="card-title">${data.siteName || "No site Name"}</h5>
         <p class="card-text"><small class="text-muted">${data.timeAgo || "-"}</small></p>
-        <button href="#" class="btn btn-primary"><img class="svg-white" src="./assets/icons/edit.svg"> OPEN
+        <button href="#" folder-name=${data.slug} class="btn btn-primary btn-open-editor"><img class="svg-white" src="./assets/icons/edit.svg"> OPEN
             EDITOR</button>
-        <button href="#" class="btn btn-primary"><img class="svg-white"
+        <button href="#" folder-name=${data.slug} class="btn btn-primary"><img class="svg-white"
                 src="./assets/icons/download-cloud.svg">PULL</button>
 
-        <button href="#" class="btn btn-danger"><img class="svg-white"
+        <button href="#" folder-name=${data.slug} class="btn btn-danger"><img class="svg-white"
                 src="./assets/icons/trash-2.svg">DELETE</button>
     </div>
 </div>
