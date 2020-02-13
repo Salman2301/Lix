@@ -18,7 +18,8 @@ Lix helps to manage multiple wix sites (add, delete, pull or push) and it's open
 ### CLI
 1. [corvid](https://github.com/wix-incubator/corvid)
 
-# Open the terminal and run the following commands
+# How to run Lix
+**Open the terminal and run the following commands**
 1. to download this repo run `git clone https://github.com/Salman2301/Lix.git`.
 2. run `cd Lix` to go to Lix folder and run `npm install` to install all the dependencies.
 3. run `npm i -g electron` to install electron globally.
