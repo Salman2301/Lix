@@ -35,21 +35,24 @@ http://localhost:8905
 ```
 **Path available**
 ```
-/corvid/createApp?folderName=siteName&siteUrl=https://username.wixsite.com/site
+http://localhost:8905/corvid/createApp?folderName=siteName&siteUrl=https://username.wixsite.com/site
 
-/corvid/pull?folderName=siteName
-/corvid/push?folderName=siteName
-/corvid/delete?folderName=siteName
-/corvid/openEditor?folderName=siteName
+http://localhost:8905/corvid/pull?folderName=siteName
+http://localhost:8905/corvid/push?folderName=siteName
+http://localhost:8905/corvid/delete?folderName=siteName
+http://localhost:8905/corvid/openEditor?folderName=siteName
 
-/corvid/list
+http://localhost:8905/corvid/list
 ```
-# TODO
+# TODO [RELEASE V 0.1.0]
 - [x] Hot reload electron application.
-- [ ] `/corvid` route should provide details about the Path avaiable and Error message.
+- [ ] `/corvid` route should provide details about the Paths avaiable and sample `Error` message.
 - [ ] `/corvid/list` a shell scripts need to be written to track and generate JSON in `.lix.json` file.
 - [ ] `/` show list of paths available.
 - [ ] `Login` Added a Login folder inside Corvid. so, the user can login and Logout.
+- [ ] Extract thumbnail from the wix site and store it in the site folder. display in the app
+- [ ] Fix the last pull date.
+- [ ] Fix Login and Logout
 
 # Release
 Please Visit the release page to download the application for linux, mac, windows once it's ready!.
