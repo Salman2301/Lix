@@ -3,3 +3,12 @@ node_modules/
 
 # ignore corvid files
 corvid/
+
+# ignore build files
+build/
+
+
+#ignore dist files
+dist/
+
+*.tgz

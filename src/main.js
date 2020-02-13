@@ -56,7 +56,39 @@ function init() {
             console.log("opening editor.");
         });
 
-    })
+    });
+
+    btnActionClick("pull");
+    btnActionClick("push");
+    btnActionClick("delete");
+
+    function btnActionClick(action) {
+        console.log("actions");
+        $('#sites').on('click', `.btn-${action}`,function(e){
+            console.log("clicked :" , this);
+            let folderName = this.getAttribute("folder-name");
+            if(!folderName) {
+                console.log("something went wrong.\n delete and add the site once again.");
+                return;
+            }
+            let url = `${serverUrl}/corvid/${action}?folderName=${folderName}`;
+
+            fetch(url ,{mode:"no-cors"})
+            .then(res=>{
+                console.log(res);
+                if(res.ok) {
+                    return res.json();
+                } else {
+                    handleError(`Status is not okay`)
+                }
+            })
+            .then(data=>{
+                // refreshSiteList();
+                console.log("editor actions : " , action);
+            });
+
+        })
+    }
 }
 
 
@@ -101,7 +133,7 @@ function handleError(msg) {
     console.log("handle Error here : ", msg);
 }
 
-var cardHTMLTemplate = (data) => `<div class="col-sm-3 mx-auto mx-2" id="card-site-id-${data.slug}">
+var cardHTMLTemplate = (data) => `<div class="col-sm-4 mx-auto mx-2" id="card-site-id-${data.slug}">
 <div class="card">
     <img src="./assets/image/default.png" class="card-img-top" alt="site image">
     <div class="card-body">
@@ -109,11 +141,20 @@ var cardHTMLTemplate = (data) => `<div class="col-sm-3 mx-auto mx-2" id="card-si
         <p class="card-text"><small class="text-muted">${data.timeAgo || "-"}</small></p>
         <button href="#" folder-name=${data.slug} class="btn btn-primary btn-open-editor"><img class="svg-white" src="./assets/icons/edit.svg"> OPEN
             EDITOR</button>
-        <button href="#" folder-name=${data.slug} class="btn btn-primary"><img class="svg-white"
-                src="./assets/icons/download-cloud.svg">PULL</button>
-
-        <button href="#" folder-name=${data.slug} class="btn btn-danger"><img class="svg-white"
-                src="./assets/icons/trash-2.svg">DELETE</button>
+        <div class="dropdown show d-inline-flex">
+            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img class="svg-white" src="./assets/icons/more-vertical.svg">
+            </a>
+            
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <button folder-name=${data.slug} class="dropdown-item btn-push"><img class="svg-white mr-3"
+                src="./assets/icons/upload-cloud.svg">Push</button>
+                <button folder-name=${data.slug} class="dropdown-item btn-push"><img class="svg-white mr-3"
+                src="./assets/icons/download-cloud.svg">Pull</button>
+                <button folder-name=${data.slug}  class="dropdown-item btn-delete" ><img class="svg-white mr-3"
+                src="./assets/icons/trash-2.svg">Delete</button>
+            </div>
+        </div>
     </div>
 </div>
 </div>`;

@@ -13,12 +13,12 @@ exports.corvid.openEditor =(folderName)=>{
     return shell.exec("npx corvid open-editor", {silent:true,async:true});
 };
 exports.corvid.pull =(folderName)=>{
-    shell.cd(`./corvid/${folderName}`);
-    return shell.exec("npx corvid pull")
+    shell.cd(`./corvid/${folderName}`, {silent:true,async:true});
+    return shell.exec("npx corvid pull", {silent:true,async:true});
 };
 exports.corvid.push =(folderName)=>{
-    shell.cd(`./corvid/${folderName}`);
-    return shell.exec("npx corvid push")
+    shell.cd(`./corvid/${folderName}`, {silent:true,async:true});
+    return shell.exec("npx corvid push", {silent:true,async:true});
 };
 
 exports.corvid.newApp = (folderName, url) =>{
