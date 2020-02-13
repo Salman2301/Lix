@@ -8,17 +8,32 @@
     "pack": "electron-builder --dir",
     "dist": "electron-builder"
   },
+  "directories": {
+    "buildResources": "build",
+    "app": "src",
+    "output": "release"
+  },
   "build": {
     "appId": "com.electron.lix",
     "mac": {
-      "category": "Utilities"
+      "category": "Utilities",
+      "target": [
+        "zip",
+        "dmg"
+      ]
+    },
+    "nsis": {
+      "perMachine": true
+    },
+    "linux" : {
+      "category": "Utility"
     }
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Salman2301/Lix.git"
   },
-  "output" : "build",
+  "output": "build",
   "keywords": [
     "wix",
     "local",
