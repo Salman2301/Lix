@@ -1,28 +1,50 @@
 # Lix-cli/Lix JS classes
 
+<br>
 Part of module in development for a user-friendly frontend to Wix's Corvid local editor.
 
 ## Dependencies
 
-**corvid-cli** and **corvid-types**: https://github.com/wix-incubator/corvid
+<br>
 
-**shelljs**: https://github.com/shelljs/shelljs
+**corvid-cli** and **corvid-types**: <https://github.com/wix-incubator/corvid>
+
+**shelljs**: <https://github.com/shelljs/shelljs>
+
+`npm i -g npm corvid-cli --save-dev corvid-types shelljs` installs these globally.
+
+If node says it can't find **shelljs** or **child_process** when running, try `export NODE_PATH=$(npm root --quiet -g)`
+
+<br>
+<br>
+<br>
 
 ## Command line usage
 
+<br>
 Use the **--help** flag for the following printout:
 
 ```shell
+--help                    print this dialog
 --init                    initial setup if you haven't run lix-cli before
 --list                    list all scanned projects
---make [path] [url]       make a new project in the given directory
-                             creates a new directory if your path includes it
+--make [url] [path]       make a new project in the given directory
+                          creates a new directory if your path includes
 --open [name|index]       open a project by name or index
 --refresh                 rescan everything
---help                    print this dialog
+--pull                    pull a project
+--snapshots               list of a project's snapshots
+--cli                     open project in a new terminal window
+--append [path]           add a project to watched list
+--delete                  remove a project from watched list
+--config                  get or change your config
+--scan [path]             search for projects in given directory
+--dirs                    prints your watched directories
+--appenddir [path]        adds a directory to watch
+--rmdir [path]            removes a directory from watched
 ```
 
-Let's say you want to clone a new project into your *Documents* directory:
+Let's say you want to clone a new project into your _Documents_ directory:
 
 `node lix-cli.js --make ~/Documents/newproject mysite.wixsite.com`
 
@@ -32,9 +54,15 @@ You can issue the **--open** flag without any arguments and you will be prompted
 
 `node lix-cli.js --open newproject`
 
-`node lix-cli.js --open 1`
+`node lix-cli.js --open 0`
 
-## Import Usage
+<br>
+<br>
+<br>
+
+## Script Usage
+
+<br>
 
 You can import either module if you don't need both - keep in mind `$px` is a subclass of `$lx`.
 
@@ -46,47 +74,120 @@ const { $lx, $px } = require("./lix-main.js");
 import { $lx, $px } from "./lix-main.js";
 ```
 
+<br><br><br>
+
 ### \$lx or new Lix()
 
-This is the parent class, and takes no arguments - in other words it doesn't act like a selector of any sort.
+<br>
 
-```javascript
-$lx.appendDir(location); //add a new directory to watch - void callback for asynchronous chaining
+This is the parent class, and takes no arguments - in other words it doesn't act like a selector of any sort. Used for all-encompassing queries and changes not specific to any one project.
 
-$lx.dir;    //returns location of default project directory
+<br>
 
-$lx.dirs;    //returns {name:location} of all watched directories
+`$lx.isInit;`
 
-$lx.get(id);    //mostly here for use by the $px subclass, however you can send it either index or dirname and it will return //that project's location
+- Checks if json "init" flag is not "false"
 
-$lx.init(callback);    //creates JSON file if isInit === "false"
-// returns projects array built from user's home directory recursive scan
+- Returns boolean
 
-$lx.isInit; //Checks json "init" value. If you want to force a refresh on appstart, set "init" to "false".
+`$lx.init(projects => { projects = [{}]; });`
 
-$lx.os; //returns host system's OS
+- Creates JSON file if isInit === "false"
 
-$lx.projects;    //returns array of all currently watched projects
+- Returns projects array built from user's home directory recursive scan
 
-$lx.rmDir(name|location); //removes directory from watched - void callback for asynchronous chaining
+`$lx.os;`
 
-$lx.scan(dir, callback);    //scan a directory of your choosing - returns {location:"dirpath", name:"dirname", updated:"date"}
-```
+- Host system's operating system.
 
-### \$px or new Project(arg)
+- Supported values = linux, win, darwin
 
-Subclass to `$lx`. It functions more like a selector. Querying methods will require an existing project, constructive methods will create using the selector arg.
+`$lx.config();`
 
-```javascript
- $px(dirpath).append();    //this will add the dirpath to the list of watched projects.
- //Automatically assigns name and updated date
- 
- $px(name).create(url, dirpath, {opts});    //creates a new project in either an existing directory or a new one.
- //Obviously node cannot install multiple in one directory.
- //with opts {debug:bool, auto:bool} auto opens project immediately upon creation
- 
- $px(dirpath).delete();    //removes project from watched list
- 
- $px(name|index).open(callback);    //opens a project using either name or index for convenience using $lx.get method.
- //callback is handy in case you want to kill the host app but keep local editor/electron open
-```
+- Gets the user's config if no argument is passed
+
+- Sets config if object is passed. i.e. `{ "terminal" : "mate-terminal", "editor": "atom"}`
+
+`$lx.projects;`
+
+- Array of all currently watched projects
+
+`$lx.updateAll(override, () => { void );`
+
+- Updates all projects
+
+- Set override to **true** to override current projects, or **false** to store them as snapshots
+
+`$lx.get(id);`
+
+- Mostly for use by the \$px subclass
+
+- Takes name or index **id** and returns a project's full path
+
+`$lx.dir;`
+
+- Location of default project directory
+
+`$lx.dirs;`
+
+- { name: location } of all watched directories
+
+`$lx.appendDir(dirpath, () => { void });`
+
+- Add a new directory to watch.
+
+`$lx.rmDir(name, () => { void });`
+
+- Removes directory from watched
+
+`$lx.scan(dir, scanned => { scanned = {}; );`
+
+- Scan a directory of your choosing
+
+<br><br><br>
+
+### \$px or new Project(id)
+
+<br>
+
+Subclass to **Lix**. It functions more like a selector. Querying methods will require an existing project, constructive methods will create using the selector argument. **id** indicates \$lx.get() is used to get the project's absolute path.
+
+<br>
+
+`$px(id).create(url, dirpath, {options});`
+
+- Creates a new project in either an existing directory or a new one
+
+- Options = `{ debug: bool, auto: bool }` auto opens project immediately upon creation
+
+- Keep in mind nodejs only accepts one **package-lock.json** per directory
+
+`$px(id).open(() => { void );`
+
+- Calling `process.exit(0);` in the callback separates this process from the local editor cleanly
+
+`$px(id).openTerminal();`
+
+- Opens project directory in a new terminal window.
+
+- Obeys config "terminal" rule
+
+`$px(id).update(override, status => { status = "Sucess/Fail message"; );`
+
+- Updates a single given project
+
+`$px(id).getSnapshots(snapshots => { snapshots = []; });`
+
+- Gets array of all snapshots available for given project
+
+- **WIP:** Will allow reverting a chosen snapshot. In the meantime you can use the subdirs function in **lix-main.js** to scan/open a full snapshot in your text editor.
+
+`$px(dirpath).append();`
+
+- Add the dirpath to the list of watched projects
+
+- Automatically assigns name and updated date
+
+`$px(id).delete();`
+
+- Deletes project from watched list
