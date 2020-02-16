@@ -22,7 +22,7 @@ Lix helps to manage multiple wix sites (add, delete, pull or push) and it's open
 **Open the terminal and run the following commands**
 1. to download this repo run `git clone https://github.com/Salman2301/Lix.git`.
 2. run `cd Lix` to go to Lix folder and run `npm install` to install all the dependencies.
-3. run `npm i -g electron` to install electron globally.
+3. run `npm i -g electron` to install electron globally(optional).
 4. run `npm start` to start the application.
 
 Lix should be opened and working 
