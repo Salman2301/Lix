@@ -1,0 +1,19 @@
+//At project's main.js async function refreshSiteList()
+//line 112
+
+        if (!data || !Array.isArray(data))
+          return $("#sites").text(" Sorry, no projects yet!"); //I set using text instead so we can preserve CSS rules for h1, but we can set inline here with html instead
+        console.log(data);
+
+        let sitesHTML = "";
+        let sitesEl = $("#sites"); //[0]; Removed the first index, since it's an id. If we want to make sites a CSS class, we can use $('.sites:first') or $('.sites:eq(0)')
+        sitesEl.text(""); // empty all the sites
+        data.forEach(site => {
+          sitesHTML = sitesHTML + ("\n" + cardHTMLTemplate(site));
+          // console.log(sitesHTML, ("\n"+ cardHTMLTemplate(site)));
+        });
+        console.log("working :", sitesHTML);
+        sitesEl.text(sitesHTML);
+      })
+      .catch(e => handleError(e));
+
