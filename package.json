@@ -47,7 +47,7 @@
   },
   "homepage": "https://github.com/Salman2301/Lix#readme",
   "devDependencies": {
-    "electron": "8.0.0",
+    "electron": "9.1.0",
     "electron-builder": "^22.3.2",
     "nodemon": "^2.0.2"
   },
